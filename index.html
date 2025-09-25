@@ -1,203 +1,105 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>MyLife — Цели и Бюджет</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        
-        body {
-            background: #f9f9fb;
-            color: #1d1d1f;
-            padding: 20px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-        
-        .header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-top: 10px;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-        
-        .input-group {
-            margin-bottom: 16px;
-        }
-        
-        .input-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            color: #444;
-        }
-        
-        input,
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
-        }
-        
-        textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-        
-        button {
-            width: 100%;
-            padding: 14px;
-            background: #0088cc;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        
-        button:hover {
-            background: #0077b5;
-        }
-        
-        .section {
-            margin-top: 24px;
-        }
-        
-        .section-title {
-            font-size: 20px;
-            margin-bottom: 16px;
-            color: #0088cc;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>MyLife — Цели и Бюджет</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background: #f9f9fb; color: #1d1d1f; padding: 20px; max-width: 500px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 24px; }
+    .header h1 { font-size: 28px; font-weight: 700; margin-top: 10px; }
+    .card { background: white; border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .input-group { margin-bottom: 16px; }
+    .input-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: #444; }
+    input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; }
+    textarea { min-height: 80px; resize: vertical; }
+    button { width: 100%; padding: 14px; background: #0088cc; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    button:hover { background: #0077b5; }
+    .section { margin-top: 24px; }
+    .section-title { font-size: 20px; margin-bottom: 16px; color: #0088cc; }
+  </style>
 </head>
-
 <body>
-    <div class="header">
-        <h1>✨ MyLife</h1>
-        <p>Твои цели, сон и финансы — в одном месте</p>
+  <div class="header">
+    <h1>✨ MyLife</h1>
+    <p>Твои цели, сон и финансы — в одном месте</p>
+  </div>
+
+  <div class="card">
+    <div class="section">
+      <div class="section-title">🎯 Новая цель</div>
+      <div class="input-group">
+        <label>Название цели</label>
+        <input type="text" id="goalTitle" placeholder="Например: Выучить Python">
+      </div>
+      <div class="input-group">
+        <label>Описание (опционально)</label>
+        <textarea id="goalDesc" placeholder="Почему это важно для тебя?"></textarea>
+      </div>
+      <button onclick="sendGoal()">Добавить цель</button>
     </div>
+  </div>
 
-    <!-- ЦЕЛИ -->
-    <div class="card">
-        <div class="section">
-            <div class="section-title">🎯 Новая цель</div>
-            <div class="input-group">
-                <label>Название цели</label>
-                <input type="text" id="goalTitle" placeholder="Например: Выучить Python">
-            </div>
-            <div class="input-group">
-                <label>Описание (опционально)</label>
-                <textarea id="goalDesc" placeholder="Почему это важно для тебя?"></textarea>
-            </div>
-            <button onclick="sendGoal()">Добавить цель</button>
-        </div>
+  <div class="card">
+    <div class="section">
+      <div class="section-title">💰 Бюджет</div>
+      <div class="input-group">
+        <label>Доход (₽)</label>
+        <input type="number" id="income" placeholder="50000">
+      </div>
+      <div class="input-group">
+        <label>Аренда (₽)</label>
+        <input type="number" id="rent" placeholder="20000">
+      </div>
+      <div class="input-group">
+        <label>Еда (₽)</label>
+        <input type="number" id="food" placeholder="10000">
+      </div>
+      <button onclick="sendBudget()">Рассчитать бюджет</button>
     </div>
+  </div>
 
-    <!-- БЮДЖЕТ -->
-    <div class="card">
-        <div class="section">
-            <div class="section-title">💰 Бюджет</div>
-            <div class="input-group">
-                <label>Доход (₽)</label>
-                <input type="number" id="income" placeholder="50000">
-            </div>
-            <div class="input-group">
-                <label>Аренда (₽)</label>
-                <input type="number" id="rent" placeholder="20000">
-            </div>
-            <div class="input-group">
-                <label>Еда (₽)</label>
-                <input type="number" id="food" placeholder="10000">
-            </div>
-            <button onclick="sendBudget()">Рассчитать бюджет</button>
-        </div>
+  <div class="card">
+    <div class="section">
+      <div class="section-title">🌙 Время подъёма</div>
+      <div class="input-group">
+        <label>Во сколько вставать?</label>
+        <input type="time" id="wakeTime" value="07:00">
+      </div>
+      <button onclick="sendSleep()">Рассчитать сон</button>
     </div>
+  </div>
 
-    <!-- СОН -->
-    <div class="card">
-        <div class="section">
-            <div class="section-title">🌙 Время подъёма</div>
-            <div class="input-group">
-                <label>Во сколько вставать?</label>
-                <input type="time" id="wakeTime" value="07:00">
-            </div>
-            <button onclick="sendSleep()">Рассчитать сон</button>
-        </div>
-    </div>
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+    tg.setHeaderColor('#0088cc');
+    tg.setBackgroundColor('#f9f9fb');
 
-    <script>
-        // Инициализация Telegram WebApp
-        const tg = window.Telegram.WebApp;
-        tg.expand(); // расширить на весь экран
-        tg.setHeaderColor('#0088cc');
-        tg.setBackgroundColor('#f9f9fb');
+    function sendGoal() {
+      const title = document.getElementById('goalTitle').value.trim();
+      if (!title) { alert('Введите название цели'); return; }
+      tg.sendData(JSON.stringify({ type: 'goal', title: title, description: document.getElementById('goalDesc').value.trim() }));
+      tg.close();
+    }
 
-        function sendGoal() {
-            const title = document.getElementById('goalTitle').value.trim();
-            const desc = document.getElementById('goalDesc').value.trim();
-            if (!title) {
-                alert('Введите название цели');
-                return;
-            }
-            tg.sendData(JSON.stringify({
-                type: 'goal',
-                title: title,
-                description: desc
-            }));
-            tg.close();
-        }
+    function sendBudget() {
+      const income = document.getElementById('income').value;
+      const rent = document.getElementById('rent').value;
+      const food = document.getElementById('food').value;
+      if (!income || !rent || !food) { alert('Заполните все поля'); return; }
+      tg.sendData(JSON.stringify({ type: 'budget', income: parseFloat(income), rent: parseFloat(rent), food: parseFloat(food) }));
+      tg.close();
+    }
 
-        function sendBudget() {
-            const income = document.getElementById('income').value;
-            const rent = document.getElementById('rent').value;
-            const food = document.getElementById('food').value;
-            if (!income || !rent || !food) {
-                alert('Заполните все поля');
-                return;
-            }
-            tg.sendData(JSON.stringify({
-                type: 'budget',
-                income: parseFloat(income),
-                rent: parseFloat(rent),
-                food: parseFloat(food)
-            }));
-            tg.close();
-        }
-
-        function sendSleep() {
-            const time = document.getElementById('wakeTime').value;
-            tg.sendData(JSON.stringify({
-                type: 'sleep',
-                wake_time: time
-            }));
-            tg.close();
-        }
-    </script>
+    function sendSleep() {
+      const time = document.getElementById('wakeTime').value;
+      if (!time) { alert('Выберите время'); return; }
+      tg.sendData(JSON.stringify({ type: 'sleep', wake_time: time }));
+      tg.close();
+    }
+  </script>
 </body>
-
 </html>
